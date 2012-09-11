@@ -62,7 +62,7 @@ void mousePressed() {
 }
 
 void keyReleased(){
-  if (key=='s' || key=='S') saveFrame(timestamp()+"_##.png");
+  if (key=='s' || key=='S') saveFrame("out/"+timestamp()+"_##.png");
 
   if (key == '1') img = loadImage("fb.jpg");
   if (key == '2') img = loadImage("galaxy.jpg"); 
