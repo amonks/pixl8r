@@ -1,6 +1,4 @@
-import generativedesign.*;
 import processing.opengl.*;
-import processing.pdf.*;
 
 PImage img;
 color moduleColor = color(0);
@@ -71,10 +69,10 @@ void keyReleased(){
   if (key == '4') img = loadImage("mtfuji.jpg"); 
   
   if (key == '5') gridStep =  10;
-  if (key == '6') gridStep =  20;
-  if (key == '7') gridStep =  30;
-  if (key == '8') gridStep =  40;
-  if (key == '9') gridStep =  50;
+  if (key == '6') gridStep =  30;
+  if (key == '7') gridStep =  50;
+  if (key == '8') gridStep =  70;
+  if (key == '9') gridStep =  90;
   
   if (key == '0') {
     if (holdSpot == false) { holdSpot = true; }
