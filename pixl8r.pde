@@ -1,22 +1,25 @@
+//needs opengl for transform
 import processing.opengl.*;
 
+//change this if you want
+int gridStep = 10;
+
+//setup
 PImage img;
 color moduleColor = color(0);
-int moduleAlpha = 180;
-int actRandomSeed = 0;
 int max_distance = screen.width; 
-int gridStep = 40;
 int  spotX = mouseX;
-int bgcolor = 0;
 int  spotY = mouseY;
+
+//default settings
 boolean holdSpot = false;
+int bgcolor = 0;
 boolean invertSize = true;
 
 void setup(){
-  img = loadImage("grass.jpg"); 
+  img = loadImage("blgnmn.jpg"); 
   size(img.width, img.height, OPENGL);
   noStroke();
-  colorMode(HSB, 360, 100, 100, 100);
   noCursor();
 }
 
@@ -24,34 +27,38 @@ void draw() {
   background(bgcolor);
   smooth();
 
-  randomSeed(actRandomSeed);
-
+  //update focal point (if using mouse)
   if(holdSpot == false) {
     spotX = mouseX;
     spotY = mouseY;
     noCursor();
   }
 
+  
+  // loop grid
   for (int gridY=0; gridY<img.height; gridY+=gridStep) {
     for (int gridX=0; gridX<img.width; gridX+=gridStep) {
+      //set fill to image color at grid position
       fill(img.get(gridX, gridY));
       
-      float diameter = dist(spotX, spotY, gridX, gridY);
-      if(invertSize == true){
+      //set diameter based on distance
+      float diameter = dist(spotX, spotY, gridX, gridY); // extra math in invert mode :(
+      if(invertSize == true){//overwrite diameter if in invert mode
         diameter = max_distance - dist(spotX, spotY, gridX, gridY);
       }
-      diameter = diameter/max_distance * 40;
+      //set diameter to 
+      diameter = diameter/max_distance * gridStep;//consider using 40 rather than gridStep for small grids
       
       pushMatrix();
       translate(gridX, gridY, diameter*5);
-      rect(0, 0, diameter, diameter);    //// also nice: ellipse(...)
+      rect(0, 0, diameter, diameter);    //ellipse looks cool too
       popMatrix(); 
     }
   }
 }
 
+//set focal point to mouse position when clicked (if using mouse)
 void mousePressed() {
-  actRandomSeed = (int) random(100000);
   if(holdSpot) {
     cursor();
     spotX = mouseX;
@@ -59,6 +66,8 @@ void mousePressed() {
   }
 }
 
+
+//keyboard
 void keyReleased(){
   if (key=='s' || key=='S') saveFrame("out/"+timestamp()+"_##.png");
 
